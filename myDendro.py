@@ -66,14 +66,14 @@ class DendroClass:
 		wavelength=c/f*u.meter
  
 		metadata['wavelength'] = wavelength  # 22.9 * u.arcsec # FWHM
-
-		
-		
+ 
 		cat = ppv_catalog(self.dendroData, metadata)
 		
 		#write catalog
 		try:
 			os.remove(self.dendroCat )
+		except:
+			pass
 		cat.write(self.dendroCat ,format='fits')
 		
 doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits" "G130150" ) 
