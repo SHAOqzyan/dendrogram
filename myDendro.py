@@ -102,6 +102,9 @@ class DendroClass:
 		"""
 		save Mask fits 
 		"""
+		
+		
+		
 		cloudID=cloud.idx
 		cloudLevel=cloud.level
 		
@@ -109,16 +112,24 @@ class DendroClass:
 		
 		cloudFeature="Cloud{}_level{}".format(cloudID,cloudLevel)
 		
+		print "Doing ",cloudFeature
 		
 		saveFITS=self.maskPath+cloudFeature+"int.fits"
 		saveFITSMask=self.maskPath+cloudFeature+"mask.fits"
 
-
+		
 
 		cloudMask=cloud.get_mask()
 		cloudMaskInt=cloudMask.astype('short') #convert mask to int, essentially 0, 1
 		intMask= np.sum(cloudMaskInt,axis=0) 
 		intMask[intMask>1]=1
+
+
+		if np.sum(intMask )< 3600 and  cloudLevel <0:
+			
+			print "Independent small cloud, ignore"
+			
+			return 
 
 		
 		sumXY= np.sum(cloudMaskInt,axis=(1,2)) 
@@ -127,6 +138,7 @@ class DendroClass:
 		
 		first= 	nonZeros[0]
 		second= nonZeros[-1] 
+		
 		
 		
 		cloudCut=FITSData[first:second+1,:,:]
@@ -141,6 +153,8 @@ class DendroClass:
 
 		data_hdu = fits.PrimaryHDU(intData, intHead)
 		
+		
+		print "saving masks...."
 		
 		mask_hdu.writeto(saveFITSMask)
 		data_hdu.writeto(saveFITS)
@@ -191,10 +205,11 @@ class DendroClass:
 			rowIndex=indexCol.index(eachC.idx )
 			newCatTB[rowIndex]["level"]=eachC.level
 			
-			statsC =PPVStatistic( eachC )
+			#statsC =PPVStatistic( eachC )
+ 
 			
-			if eachC.level>0 and statsC.area_exact.value<3600:
-				continue # dot con 
+			#if eachC.level>0 and statsC.area_exact.value<3600:
+				#continue # dot con 
  	
 			#else write the mask fits
 			
