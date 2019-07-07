@@ -79,3 +79,5 @@ class DendroClass:
 		cat.write(self.dendroCat ,format='fits')
 		
 doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
+
+doDendro.WriteCatalog()
