@@ -176,6 +176,14 @@ class DendroClass:
 		
 		indexCol= list( newCatTB["_idx"]  )
 		
+		
+		print "Producing mask fits"
+		
+		if self.dendroData == None:
+			
+			self.readDendro()
+		
+		
 		for eachC in self.dendroData:
 			
 			#tempTB=newCatTB[  newCatTB["_idx"]==eachC.idx  ]
