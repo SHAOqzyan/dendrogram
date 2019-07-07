@@ -69,7 +69,7 @@ class DendroClass:
 
 		
 		
-		cat = ppv_catalog(self., metadata)
+		cat = ppv_catalog(self.dendroData, metadata)
 		
 		#write catalog
 		try:
