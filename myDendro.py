@@ -19,7 +19,7 @@ class DendroClass:
 
 
 
-	def __init__(self,CO12FITS ,dendroFITS,regionName): 
+	def __init__(self, CO12FITS ,dendroFITS,regionName): 
 		
 		self.CO12FITS=CO12FITS
 		
@@ -47,6 +47,8 @@ class DendroClass:
 		
 				
 		"""
+		
+		print "Writing catalg"
 		
 		if self.dendroData == None:
 			
@@ -76,4 +78,4 @@ class DendroClass:
 			pass
 		cat.write(self.dendroCat ,format='fits')
 		
-doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits" "G130150" ) 
+doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
