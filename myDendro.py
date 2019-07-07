@@ -38,7 +38,7 @@ class DendroClass:
 
 
 	
-	def readDendro(self)
+	def readDendro(self):
 
 		self.dendroData= Dendrogram.load_from(self.dendroFITS )
 
