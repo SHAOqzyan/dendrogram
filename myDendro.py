@@ -169,7 +169,7 @@ class DendroClass:
 		
 		
 		
-		fitsHdu=fits.open(searchFITS)[0]
+		fitsHdu=fits.open(self.CO12FITS)[0]
 		
  		data=fitsHdu.data
  		head=fitsHdu.header
