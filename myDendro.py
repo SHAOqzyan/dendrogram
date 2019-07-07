@@ -9,6 +9,8 @@ from astropy.table import Table,vstack
 import astropy.units as u
 #first step before 
 
+import numpy as np
+
 #because this has to be done on server, make this simple
 
 class DendroClass:
@@ -46,7 +48,8 @@ class DendroClass:
 	def readDendro(self):
 
 		self.dendroData= Dendrogram.load_from(self.dendroFITS )
-
+		print ""
+		print "Dendrogram read!!"
 	def WriteCatalog(self):
 		"""
 		
@@ -58,7 +61,7 @@ class DendroClass:
 		if self.dendroData == None:
 			
 			self.readDendro()
-		
+			
 		
 		#define metadata
 		metadata = {}
@@ -205,16 +208,7 @@ class DendroClass:
 			rowIndex=indexCol.index(eachC.idx )
 			newCatTB[rowIndex]["level"]=eachC.level
 			
-			#statsC =PPVStatistic( eachC )
  
-			
-			#if eachC.level>0 and statsC.area_exact.value<3600:
-				#continue # dot con 
- 	
-			#else write the mask fits
-			
-			#cloudID="Cloud{}".format(eachC.idx)
-			
 			self.saveMask( eachC,data,head)
 		#for eachC in self.dendroData:
 
