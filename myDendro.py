@@ -258,8 +258,8 @@ class DendroClass:
 
 
 if 1:
-	pass
-
+	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
+	doDendro.writeTreeStructure()
 
 if 0:
 	# this should only be running on the server
