@@ -11,6 +11,8 @@ import astropy.units as u
 
 import numpy as np
 
+
+
 #because this has to be done on server, make this simple
 
 class DendroClass:
@@ -221,8 +223,49 @@ class DendroClass:
 
 		newCatTB.write(self.catWithLevelTB )
 
-doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
 
-#doDendro.WriteCatalog()
 
-doDendro.produceMaskFITS()
+	def calDisByCloudID(self):
+		"""
+		"""
+
+	def writeTreeStructure(self):
+		
+		if self.dendroData == None:
+			
+			self.readDendro()
+		
+		f=open("treeStructure.txt",'w')
+		
+		#for eachC in self.dendroData:
+		for eachC in self.dendroData:
+
+			parentID=-1
+			
+			p=eachC.parent
+			
+			if p!=None:
+			
+				parentID=p.idx
+			
+			fileRow="{} {}".format(eachC.idx,parentID)
+			f.write(fileRow+" \n")
+			
+		f.close()
+
+	def ZZZ(self):
+		pass
+
+
+if 1:
+	pass
+
+
+if 0:
+	# this should only be running on the server
+	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
+	
+	#doDendro.WriteCatalog()
+	
+	doDendro.produceMaskFITS()
+	
