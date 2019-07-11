@@ -15,6 +15,10 @@ import numpy as np
 
 #because this has to be done on server, make this simple
 
+# oridyce dendrofits
+
+# produce tree , catalog, and save mask files
+
 class DendroClass:
 
 
@@ -39,13 +43,15 @@ class DendroClass:
 
 		self.regionName=regionName
 
-
+		self.catWithLevelTB=regionName+ self.catWithLevelTB
 		self.dendroCat=self.regionName+"_DendroCat.fit"
 
-		self.maskPath="dendroMask"
+		self.maskPath=self.regionName+"Mask/"
+
+		
 
 		os.system( "mkdir " +self.maskPath )
-		self.maskPath="./dendroMask/"
+		#self.maskPath="./dendroMask/"
 
 	def readDendro(self):
 
@@ -71,6 +77,12 @@ class DendroClass:
 		metadata['spatial_scale'] =  30 * u.arcsec
 		metadata['beam_major'] =  50 * u.arcsec # FWHM
 		metadata['beam_minor'] =  50 * u.arcsec # FWHM
+		
+		if self.regionName=="Mopra":
+			metadata['beam_major'] =  33 * u.arcsec # FWHM
+			metadata['beam_minor'] =  33 * u.arcsec # FWHM
+		
+		
 		metadata['wcs'] = WCS( self.CO12Head)  # 22.9 * u.arcsec # FWHM
 		
 		c= 299792458.
@@ -175,7 +187,12 @@ class DendroClass:
 		"""
 		#read cat
 		
-		
+
+		if not os.path.isfile(self.dendroCat):
+			self.WriteCatalog()
+ 			
+			
+
 		catTB=Table.read(self.dendroCat)
 		
 		newCatTB=catTB.copy()
@@ -258,12 +275,33 @@ class DendroClass:
 
 
 if 1:
+	# this should only be running on the server
+	doDendro= DendroClass( "/home/qzyan/WORK/dataDisk/G190/G190MergeCO12_32bit.fits", "G190Dendro32bit.fits","G190" ) 
+	
+	#doDendro.WriteCatalog()
+	
+	doDendro.produceMaskFITS()
+	
+
+
+
+if 0:
 	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
 	doDendro.writeTreeStructure()
 
 if 0:
 	# this should only be running on the server
 	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
+	
+	#doDendro.WriteCatalog()
+	
+	doDendro.produceMaskFITS()
+
+ 
+ 
+if 0:
+	# this should only be running on the server
+	doDendro= DendroClass( "moproCO12.fits", "MopraDendroLarge.fits","Mopra" ) 
 	
 	#doDendro.WriteCatalog()
 	
