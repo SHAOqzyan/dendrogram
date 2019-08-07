@@ -59,7 +59,8 @@ class DendroClass:
 		#self.maskPath="./dendroMask/"
 
 	def readDendro(self):
-
+		
+		print "Reading dendro saved fits"
 		self.dendroData= Dendrogram.load_from(self.dendroFITS )
 		print ""
 		print "Dendrogram read!!"
@@ -198,7 +199,10 @@ class DendroClass:
 		"""
 		
 		#origin dat
-		
+		if self.dendroData == None:
+			
+			self.readDendro()
+			
 		searchFITS= CO12FITS
 		#searchFITS13="./data/mosaic_L.fits"
 		
@@ -218,9 +222,7 @@ class DendroClass:
 
  
 		
-		if self.dendroData == None:
-			
-			self.readDendro()
+
 		print "11111111111"
 		for eachC in self.dendroData:
 			print "222222222222"
