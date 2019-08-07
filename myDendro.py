@@ -226,7 +226,7 @@ class DendroClass:
 		
  
 		
-		for eachC in G210Dendro:
+		for eachC in self.dendroData:
 			
 
 			statsC =PPVStatistic( eachC )
