@@ -367,7 +367,7 @@ class DendroClass:
 		pass
 
 
-if 0: #producePVFITS
+if 1: #producePVFITS
 	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
 	doDendro.producePVFITS(doDendro.CO12FITS, "G130150LVHead.fits","cloudCatWithLevelG130150.fit" )
 
