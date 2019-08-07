@@ -29,6 +29,9 @@ class DendroClass:
 
 	catWithLevelTB="cloudCatWithLevel.fit"
 	
+	
+
+	
 	def __init__(self, CO12FITS ,dendroFITS,regionName): 
 		
 		self.CO12FITS=CO12FITS
@@ -47,10 +50,12 @@ class DendroClass:
 		self.dendroCat=self.regionName+"_DendroCat.fit"
 
 		self.maskPath=self.regionName+"Mask/"
+		os.system( "mkdir " +self.maskPath )
+		
+		self.pvPath= "pvPath/"+self.regionName+"PVFITS/"
+		os.system( "mkdir " +self.pvPath )
 
 		
-
-		os.system( "mkdir " +self.maskPath )
 		#self.maskPath="./dendroMask/"
 
 	def readDendro(self):
@@ -176,8 +181,18 @@ class DendroClass:
 		mask_hdu.writeto(saveFITSMask)
 		data_hdu.writeto(saveFITS)
 	
-
+	def producePVFITS(self):
 		
+		"""
+		
+		produce PV FITS
+		
+		"""
+		if not os.path.isfile(self.dendroCat):
+			self.WriteCatalog()
+ 			
+
+
 
 	def produceMaskFITS(self):
 		"""
@@ -231,7 +246,7 @@ class DendroClass:
 			self.saveMask( eachC,data,head)
 		#for eachC in self.dendroData:
 
- 
+		
 
 		try:
 			os.remove(self.catWithLevelTB)
@@ -252,7 +267,7 @@ class DendroClass:
 			
 			self.readDendro()
 		
-		f=open("treeStructure.txt",'w')
+		f=open(self.regionName+"treeStructure.txt",'w')
 		
 		#for eachC in self.dendroData:
 		for eachC in self.dendroData:
@@ -275,6 +290,11 @@ class DendroClass:
 
 
 if 1:
+	doDendro= DendroClass( "/home/qzyan/WORK/projects/maddalena/data/mosaic_U.fits", "/home/qzyan/WORK/projects/maddalena/G210DendrogramMoreComplete.fits","G210" ) 
+
+	#doDendro.writeTreeStructure()
+
+if 0:
 	# this should only be running on the server
 	doDendro= DendroClass( "/home/qzyan/WORK/dataDisk/G190/G190MergeCO12_32bit.fits", "G190Dendro32bit.fits","G190" ) 
 	
