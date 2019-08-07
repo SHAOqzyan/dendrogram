@@ -202,9 +202,13 @@ class DendroClass:
 		searchFITS= CO12FITS
 		#searchFITS13="./data/mosaic_L.fits"
 		
+		hdu=fits.open(searchFITS)[0]
 		
-		fitsData,fitsHead=myFITS.readFITS( searchFITS)
-		#fitsData13,fitsHead13=myFITS.readFITS( searchFITS)
+
+		
+		
+		fitsData = hdu.data
+		fitsHead = hdu.header
 
  
 		pvData,pvHeader=myFITS.readFITS(pvHeaderFITS )
