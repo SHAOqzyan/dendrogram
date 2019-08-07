@@ -210,10 +210,12 @@ class DendroClass:
 		fitsData = hdu.data
 		fitsHead = hdu.header
 
- 
-		pvData,pvHeader=myFITS.readFITS(pvHeaderFITS )
+		hduPV=fits.open(pvHeaderFITS)[0]
+
+		pvData=  hduPV.data
+		pvHeader =   hduPV.header
 		
-		
+
  
 		
 		if self.dendroData == None:
