@@ -30,7 +30,7 @@ class DendroClass:
 	catWithLevelTB="cloudCatWithLevel.fit"
 	
 	
-
+	G130150Mask="./G130150Mask/"
 	
 	def __init__(self, CO12FITS ,dendroFITS,regionName): 
 		
@@ -181,16 +181,94 @@ class DendroClass:
 		mask_hdu.writeto(saveFITSMask)
 		data_hdu.writeto(saveFITS)
 	
-	def producePVFITS(self):
+	
+	
+	
+	
+	
+	
+	def producePVFITS(self,CO12FITS,pvHeaderFITS,dendroTB   ):
 		
 		"""
 		
 		produce PV FITS
 		
+		the pvHeaderFITS is only used for provide header fitsl
+		
 		"""
-		if not os.path.isfile(self.dendroCat):
-			self.WriteCatalog()
- 			
+		
+		#origin dat
+		
+		searchFITS= CO12FITS
+		#searchFITS13="./data/mosaic_L.fits"
+		
+		
+		fitsData,fitsHead=myFITS.readFITS( searchFITS)
+		#fitsData13,fitsHead13=myFITS.readFITS( searchFITS)
+
+ 
+		pvData,pvHeader=myFITS.readFITS(pvHeaderFITS )
+		
+		
+ 
+		
+		if self.dendroData == None:
+			
+			self.readDendro()
+		
+		WCSG210=WCS(fitsHead )
+		
+ 
+		
+		for eachC in G210Dendro:
+			
+
+			statsC =PPVStatistic( eachC )
+ 
+			
+			cloudID="Cloud{}".format(eachC.idx)
+			#print dir(statsC)
+			
+			if eachC.level>0: #only trunks #and statsC.area_exact.value<3600: on
+				continue
+			
+			
+			maskData=eachC.get_mask()
+			maskData=maskData*1
+			cloudData12=fitsData*maskData
+			
+			PVData2D=np.sum(cloudData12,axis=1)
+			
+			PVDataMask2D=np.sum(maskData,axis=1)
+
+			PVDataMask2D[PVDataMask2D>0]=1
+			
+			pvSaveName=self.G130150Mask+ "{}_PV.fits".format(cloudID)
+			
+			pvSaveNameMask=self.G130150Mask+ "{}_PVMask.fits".format(cloudID)
+
+			try :
+				os.remove( pvSaveName )
+			except:
+				pass
+			
+			try :
+				os.remove( pvSaveNameMask )
+			except:
+				pass
+			
+			fits.writeto(pvSaveName, PVData2D, pvHeader)
+			
+			fits.writeto(pvSaveNameMask, PVDataMask2D, pvHeader)
+
+ 
+			#self.drawDendroPVbyMaskData(eachC.idx,  fitsData, fitsHead , maskData,pvHeader  )
+
+			 
+
+
+		return 
+
 
 
 
@@ -289,7 +367,12 @@ class DendroClass:
 		pass
 
 
-if 1:
+if 0: #producePVFITS
+	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
+	doDendro.producePVFITS(doDendro.CO12FITS, "G130150LVHead.fits","cloudCatWithLevelG130150.fit" )
+
+
+if 0:
 	doDendro= DendroClass( "/home/qzyan/WORK/projects/maddalena/data/mosaic_U.fits", "/home/qzyan/WORK/projects/maddalena/G210DendrogramMoreComplete.fits","G210" ) 
 
 	#doDendro.writeTreeStructure()
