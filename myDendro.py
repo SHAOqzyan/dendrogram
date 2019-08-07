@@ -221,13 +221,10 @@ class DendroClass:
 		if self.dendroData == None:
 			
 			self.readDendro()
-		
-		WCSG210=WCS(fitsHead )
-		
- 
-		
+		print "11111111111"
 		for eachC in self.dendroData:
-			
+			print "222222222222"
+
 
 			statsC =PPVStatistic( eachC )
  
