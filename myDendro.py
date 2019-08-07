@@ -36,14 +36,23 @@ class DendroClass:
 		
 		self.CO12FITS=CO12FITS
 		
+
+		
+		self.dendroFITS=dendroFITS
+		
+		#read fits imediately
+		
+		
+		self.dendroData= Dendrogram.load_from(self.dendroFITS )
+		
+		
+
 		hdu=fits.open( self.CO12FITS)[0]
 		
 		self.CO12Data= hdu.data
 		
 		self.CO12Head= hdu.header
 		
-		self.dendroFITS=dendroFITS
-
 		self.regionName=regionName
 
 		self.catWithLevelTB=regionName+ self.catWithLevelTB
@@ -199,20 +208,16 @@ class DendroClass:
 		"""
 		
 		#origin dat
-		if self.dendroData == None:
-			
-			self.readDendro()
-			
+ 
 		searchFITS= CO12FITS
 		#searchFITS13="./data/mosaic_L.fits"
 		
-		hdu=fits.open(searchFITS)[0]
-		
 
-		
-		
-		fitsData = hdu.data
-		fitsHead = hdu.header
+		fitsData = self.CO12Data
+		fitsHead =  self.CO12Head
+
+ 
+
 
 		hduPV=fits.open(pvHeaderFITS)[0]
 
@@ -223,20 +228,20 @@ class DendroClass:
  
 		
 
-		print "11111111111"
+		#print "11111111111"
 		for eachC in self.dendroData:
-			print "222222222222"
+			#print "222222222222"
 
-
-			statsC =PPVStatistic( eachC )
+			if eachC.level>0: #only trunks #and statsC.area_exact.value<3600: on
+				continue
+			
+			#statsC =PPVStatistic( eachC )
  
 			
 			cloudID="Cloud{}".format(eachC.idx)
 			#print dir(statsC)
 			
-			if eachC.level>0: #only trunks #and statsC.area_exact.value<3600: on
-				continue
-			
+
 			
 			maskData=eachC.get_mask()
 			maskData=maskData*1
@@ -262,7 +267,7 @@ class DendroClass:
 			except:
 				pass
 			
-			print "Saveing...",cloudID
+			print "Saving...",cloudID
 			
 			fits.writeto(pvSaveName, PVData2D, pvHeader)
 			
