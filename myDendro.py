@@ -261,6 +261,8 @@ class DendroClass:
 			except:
 				pass
 			
+			print "Saveing...",cloudID
+			
 			fits.writeto(pvSaveName, PVData2D, pvHeader)
 			
 			fits.writeto(pvSaveNameMask, PVDataMask2D, pvHeader)
