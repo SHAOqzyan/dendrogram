@@ -247,7 +247,7 @@ class DendroClass:
 			maskData=maskData*1
 			cloudData12=fitsData*maskData
 			
-			PVData2D=np.sum(cloudData12,axis=1)
+			PVData2D=np.sum(cloudData12,axis=1) 
 			
 			PVDataMask2D=np.sum(maskData,axis=1)
 
@@ -378,8 +378,9 @@ class DendroClass:
 	def ZZZ(self):
 		pass
 
+ 
 
-if 1: #producePVFITS
+if 0: #producePVFITS
 	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
 	doDendro.producePVFITS(doDendro.CO12FITS, "G130150LVHead.fits","cloudCatWithLevelG130150.fit" )
 
