@@ -92,7 +92,7 @@ class DendroClass:
 		metadata['spatial_scale'] =  30 * u.arcsec
 		metadata['beam_major'] =  50 * u.arcsec # FWHM
 		metadata['beam_minor'] =  50 * u.arcsec # FWHM
-		
+		# the velocity_scale should be mentioned, other wise the v_rms would be in pixels
 		if self.regionName=="Mopra":
 			metadata['beam_major'] =  33 * u.arcsec # FWHM
 			metadata['beam_minor'] =  33 * u.arcsec # FWHM
@@ -203,7 +203,7 @@ class DendroClass:
 		
 		produce PV FITS
 		
-		the pvHeaderFITS is only used for provide header fitsl
+		the pvHeaderFITS is only used for provide header fits, which could be produced with myPYTHON (creatPPVHeader)
 		
 		"""
 		
@@ -311,9 +311,10 @@ class DendroClass:
 		
 		
 		fitsHdu=fits.open(self.CO12FITS)[0]
-		
- 		data=fitsHdu.data
- 		head=fitsHdu.header
+
+		data=fitsHdu.data
+
+		head=fitsHdu.header
 		
 		indexCol= list( newCatTB["_idx"]  )
 		
@@ -378,7 +379,71 @@ class DendroClass:
 	def ZZZ(self):
 		pass
 
- 
+
+
+if 1: #intialize a region
+
+	dendroFITSPath="/home/qzyan/WORK/projects/doDendro/"
+	dendroFITS=dendroFITSPath + "G214Dendro.fits"
+	regionName="G214"
+	FITSCO12=  "/home/qzyan/WORK/projects/myDendro/G214CO12.fits"
+
+	doDendro= DendroClass( FITSCO12,dendroFITS,regionName )
+	#doDendro.producePVFITS(doDendro.CO12FITS, "/home/qzyan/WORK/dataDisk/MWISP/G40/fred12LVHeader.fits" )
+
+	#doDendro.produceMaskFITS()
+
+	doDendro.WriteCatalog()
+	#doDendro.writeTreeStructure()
+
+
+
+if 0: #intialize a region
+
+	dendroFITSPath="/home/qzyan/WORK/projects/doDendro/"
+	dendroFITS=dendroFITSPath + "split11G2650dendro.fits"
+	regionName="split11New"
+	FITSCO12=dendroFITSPath+ "split11G2650.fits"
+
+	doDendro= DendroClass( FITSCO12,dendroFITS,regionName )
+	#doDendro.producePVFITS(doDendro.CO12FITS, "/home/qzyan/WORK/dataDisk/MWISP/G40/fred12LVHeader.fits" )
+
+	doDendro.produceMaskFITS()
+
+	doDendro.WriteCatalog()
+	doDendro.writeTreeStructure()
+
+
+
+
+
+
+if 0: #intialize a region
+
+	dendroFITSPath="/home/qzyan/WORK/projects/doDendro/"
+	dendroFITS=dendroFITSPath + "split11G2650dendro.fits"
+	regionName="split11New"
+	FITSCO12=dendroFITSPath+ "split11G2650.fits"
+
+	doDendro= DendroClass( FITSCO12,dendroFITS,regionName )
+	#doDendro.producePVFITS(doDendro.CO12FITS, "/home/qzyan/WORK/dataDisk/MWISP/G40/fred12LVHeader.fits" )
+
+	doDendro.produceMaskFITS()
+
+	doDendro.WriteCatalog()
+	doDendro.writeTreeStructure()
+
+
+if 0: # G40
+	doDendro= DendroClass( "fred12.fits", "G40Dendro32bit.fits","G40" )
+	doDendro.producePVFITS(doDendro.CO12FITS, "/home/qzyan/WORK/dataDisk/MWISP/G40/fred12LVHeader.fits" )
+
+
+	#doDendro.produceMaskFITS()
+
+	#doDendro.WriteCatalog()
+	#doDendro.writeTreeStructure()
+
 
 if 0: #producePVFITS
 	doDendro= DendroClass( "G130150merge12.fits", "G130150Dendro.fits","G130150" ) 
