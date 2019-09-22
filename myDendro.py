@@ -381,11 +381,11 @@ class DendroClass:
 
 
 if 1: #intialize a region
-
+	runi=2
 	dendroFITSPath=""
-	dendroFITS=  "left1Dendro.fits"
-	regionName="left1"
-	FITSCO12=  "left1Cut.fits"
+	dendroFITS=  "left{}Dendro.fits".format(runi)
+	regionName="left{}".format(runi)
+	FITSCO12=  "left{}Cut.fits".format(runi)
 
 	doDendro= DendroClass( FITSCO12,dendroFITS,regionName )
 	doDendro.WriteCatalog()
