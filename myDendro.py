@@ -380,8 +380,29 @@ class DendroClass:
 		pass
 
 
-
 if 1: #intialize a region
+
+	dendroFITSPath=""
+	dendroFITS=  "left1Dendro.fits"
+	regionName="left1"
+	FITSCO12=  "left1Cut.fits"
+
+	doDendro= DendroClass( FITSCO12,dendroFITS,regionName )
+	doDendro.WriteCatalog()
+	doDendro.produceMaskFITS()
+	doDendro.writeTreeStructure()
+
+	#doDendro.producePVFITS(doDendro.CO12FITS, "/home/qzyan/WORK/dataDisk/MWISP/G40/fred12LVHeader.fits" )
+
+
+
+
+
+
+
+
+
+if 0: #intialize a region
 
 	dendroFITSPath="/home/qzyan/WORK/projects/doDendro/"
 	dendroFITS=dendroFITSPath + "G214Dendro.fits"
