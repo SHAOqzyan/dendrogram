@@ -43,8 +43,7 @@ class DendroClass:
 		#read fits imediately
 		
 		
-		self.dendroData= Dendrogram.load_from(self.dendroFITS )
-		
+
 		
 
 		hdu=fits.open( self.CO12FITS)[0]
@@ -61,10 +60,13 @@ class DendroClass:
 		self.maskPath=self.regionName+"Mask/"
 		os.system( "mkdir " +self.maskPath )
 		
-		self.pvPath= "pvPath/"+self.regionName+"PVFITS/"
+		self.pvPath= "./pvPath/"+self.regionName+"PVFITS/"
 		os.system( "mkdir " +self.pvPath )
 
-		
+
+		print "Loading dendrodata..."
+		self.dendroData= Dendrogram.load_from(self.dendroFITS )
+
 		#self.maskPath="./dendroMask/"
 
 	def readDendro(self):
@@ -266,25 +268,17 @@ class DendroClass:
 
 			PVDataMask2D[PVDataMask2D>0]=1
 			
-			pvSaveName=self.G130150Mask+ "{}_PV.fits".format(cloudID)
+			pvSaveName=self.pvPath+ "{}_{}_PV.fits".format( self.regionName , cloudID)
 			
-			pvSaveNameMask=self.G130150Mask+ "{}_PVMask.fits".format(cloudID)
+			pvSaveNameMask=self.pvPath+ "{}_{}_PVMask.fits".format(  self.regionName , cloudID)
 
-			try :
-				os.remove( pvSaveName )
-			except:
-				pass
-			
-			try :
-				os.remove( pvSaveNameMask )
-			except:
-				pass
+
 			
 			print "Saving...",cloudID
 			
-			fits.writeto(pvSaveName, PVData2D, pvHeader)
+			fits.writeto(pvSaveName, PVData2D, pvHeader, overwrite=True)
 			
-			fits.writeto(pvSaveNameMask, PVDataMask2D, pvHeader)
+			fits.writeto(pvSaveNameMask, PVDataMask2D, pvHeader, overwrite=True)
 
  
 			#self.drawDendroPVbyMaskData(eachC.idx,  fitsData, fitsHead , maskData,pvHeader  )
