@@ -152,6 +152,9 @@ class DendroClass:
 		
 
 		cloudMask=cloud.get_mask()
+
+
+
 		cloudMaskInt=cloudMask.astype('short') #convert mask to int, essentially 0, 1
 		intMask= np.sum(cloudMaskInt,axis=0) 
 		intMask[intMask>1]=1
@@ -171,7 +174,7 @@ class DendroClass:
 		first= 	nonZeros[0]
 		second= nonZeros[-1] 
 		
-		
+
 		
 		cloudCut=FITSData[first:second+1,:,:]
 		#print first, second
@@ -187,7 +190,17 @@ class DendroClass:
 		
 		
 		print "saving masks...."
-		
+
+		try:
+			os.remove( saveFITSMask )
+		except:
+			pass
+
+		try:
+			os.remove( saveFITS )
+		except:
+			pass
+
 		mask_hdu.writeto(saveFITSMask)
 		data_hdu.writeto(saveFITS)
 	
@@ -197,7 +210,7 @@ class DendroClass:
 	
 	
 	
-	def producePVFITS(self,CO12FITS,pvHeaderFITS,dendroTB   ):
+	def producePVFITS(self,CO12FITS,pvHeaderFITS,dendroTB=None   ):
 		
 		"""
 		
@@ -295,7 +308,7 @@ class DendroClass:
 
 		if not os.path.isfile(self.dendroCat):
 			self.WriteCatalog()
- 			
+
 			
 
 		catTB=Table.read(self.dendroCat)
@@ -333,7 +346,7 @@ class DendroClass:
 			rowIndex=indexCol.index(eachC.idx )
 			newCatTB[rowIndex]["level"]=eachC.level
 			
- 
+
 			self.saveMask( eachC,data,head)
 		#for eachC in self.dendroData:
 
@@ -379,8 +392,22 @@ class DendroClass:
 	def ZZZ(self):
 		pass
 
+if 1:# PV fits
 
-if 1: #intialize a region
+	runi=2
+	dendroFITSPath=""
+	dendroFITS=  "left{}Dendro.fits".format(runi)
+	regionName="left{}".format(runi)
+	FITSCO12=  "left{}Cut.fits".format(runi)
+
+	pvHeadFITS= "Gleft{}_LV.fits".format(runi)
+
+	doDendro= DendroClass( FITSCO12,dendroFITS,regionName )
+
+	doDendro.producePVFITS (FITSCO12,pvHeadFITS )
+
+
+if 0: #intialize a region
 	runi=2
 	dendroFITSPath=""
 	dendroFITS=  "left{}Dendro.fits".format(runi)
@@ -412,7 +439,7 @@ if 0: #intialize a region
 	doDendro= DendroClass( FITSCO12,dendroFITS,regionName )
 	#doDendro.producePVFITS(doDendro.CO12FITS, "/home/qzyan/WORK/dataDisk/MWISP/G40/fred12LVHeader.fits" )
 
-	#doDendro.produceMaskFITS()
+	doDendro.produceMaskFITS()
 
 	doDendro.WriteCatalog()
 	#doDendro.writeTreeStructure()
