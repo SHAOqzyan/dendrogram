@@ -388,7 +388,7 @@ class DendroClass:
 
 if 1:# PV fits
 
-	runi=2
+	runi=1
 	dendroFITSPath=""
 	dendroFITS=  "left{}Dendro.fits".format(runi)
 	regionName="left{}".format(runi)
