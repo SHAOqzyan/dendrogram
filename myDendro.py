@@ -247,8 +247,8 @@ class DendroClass:
 		for eachC in self.dendroData:
 			#print "222222222222"
 
-			if eachC.level>0: #only trunks #and statsC.area_exact.value<3600: on
-				continue
+			#if eachC.level>0: #only trunks #and statsC.area_exact.value<3600: on
+				#continue
 			
 			#statsC =PPVStatistic( eachC )
  
